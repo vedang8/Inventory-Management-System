@@ -1,13 +1,22 @@
-import { WebSocketGateway, WebSocketServer, SubscribeMessage } from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-@WebSocketGateway({ cors: true }) // Enables CORS for frontend connection
-export class InventoryGateway {
+@WebSocketGateway({
+  cors: {
+    origin: '*', // Allow requests from any frontend
+  },
+})
+export class WebsocketGateway {
   @WebSocketServer()
   server: Server;
 
-  // Emit low-stock alert event to all connected clients
   sendLowStockAlert(product: any) {
-    this.server.emit('lowStockAlert', product);
+    this.server.emit('lowStockAlert', {
+      id: product.id,
+      product_name: product.product_name,
+      quantity: product.quantity,
+      message: `⚠️ Warning: Stock is running low!`
+    });
   }
 }
+

@@ -2,21 +2,21 @@ import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InventoryRepository } from "../repositories/inventory.repository";
 import { CreateInventoryDto } from "../dtos/createInventory.dto";
 import { Inventory } from "../entities/inventory.entity";
-import { InventoryGateway } from "../gateways/inventory.gateway";
+import { WebsocketGateway } from "../gateways/inventory.gateway";
 import { UpdateInventoryDto } from "../dtos/updateInventory.dto";
 
 @Injectable()
 export class InventoryService{
-    lowStockThreshold: number = 5;
+    lowStockThreshold: number = 10;
     private readonly logger = new Logger(InventoryService.name);
     constructor(
         private readonly inventoryRepository: InventoryRepository,
-        private inventoryGateway: InventoryGateway
+        private inventoryGateway: WebsocketGateway
     ) {}
 
-    async createInventory(createInventoryDto: CreateInventoryDto):  Promise<{ success: boolean; message: string }>{
+    async createInventory(user_id: string, createInventoryDto: CreateInventoryDto):  Promise<{ success: boolean; message: string }>{
         try{
-            const inventory = await this.inventoryRepository.createInventory(createInventoryDto);
+            const inventory = await this.inventoryRepository.createInventory(user_id, createInventoryDto);
             if(inventory)
                 this.checkStockLevel(inventory);
             return {
@@ -49,7 +49,7 @@ export class InventoryService{
         }
     }
     
-    async deleteProduct(id: number): Promise<{success: boolean; message: string;}>{
+    async deleteProduct(id: string): Promise<{success: boolean; message: string;}>{
         try{
             const isDeleted = await this.inventoryRepository.deleteProduct(id);
             if(isDeleted){
@@ -110,6 +110,23 @@ export class InventoryService{
             return {
                 success: false,
                 message: 'Failed to update the item'
+            }
+        }
+    }
+
+    async getLowStockItems(id: string): Promise<{success: boolean; message: string; products?: Inventory[] | null}>{
+        try{
+            const products = await this.inventoryRepository.getLowStockItems(id);
+            return {
+                success: true,
+                message: 'Your low stock items',
+                products: products
+            }
+        }catch(error){
+            console.error('Error in fetching low stock items: ', error.message);
+            return {
+                success: false,
+                message: 'Failed to fetch the low stock items'
             }
         }
     }

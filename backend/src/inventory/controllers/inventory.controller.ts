@@ -9,9 +9,15 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt_auth.guard';
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
+  
+    @Get('low-stock')
+    getLowStockItems(@Req() req: Request) {
+        return this.inventoryService.getLowStockItems(req['user'].userId);
+    }
+    
     @Post()
-    createInventory(@Body() createInventoryDto: CreateInventoryDto) {
-        return this.inventoryService.createInventory(createInventoryDto);
+    createInventory(@Body() createInventoryDto: CreateInventoryDto, @Req() req: Request) {
+        return this.inventoryService.createInventory(req['user'].userId, createInventoryDto);
     }
 
     @Get()
@@ -30,12 +36,7 @@ export class InventoryController {
     }
 
     @Delete(':id')
-    deleteInventory(@Param('id') id: number) {
+    deleteInventory(@Param('id') id: string) {
         return this.inventoryService.deleteProduct(id);
-    }
-
-    @Get('low-stock')
-    getLowStockItems() {
-        //return this.inventoryService.getLowStockItems();
     }
 }
