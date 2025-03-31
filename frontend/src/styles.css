@@ -12,3 +12,11 @@ html, body {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+.success-toast {
+    background-color: #9c27b0 !important;
+}
+
+.error-toast {
+    background-color: #d81b60 !important;
+}
