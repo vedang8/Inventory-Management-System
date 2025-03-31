@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm";
+import { User } from "src/users/entities/users.entity";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity({ name: 'inventory' })
-export class User{
+export class Inventory{
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -26,7 +27,7 @@ export class User{
     @ManyToOne(() => User, {onDelete: 'CASCADE'})
     @JoinColumn({ name: 'user_id'})
     user: User;
-    
+
     @CreateDateColumn()
     createdAt: Date;
 
