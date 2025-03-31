@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{isEdit ? 'Edit Product' : 'Add Product'}}</h2>
+<mat-dialog-content>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="product_name">
+      <mat-error *ngIf="productForm.get('product_name')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Quantity</mat-label>
+      <input matInput type="number" formControlName="quantity">
+      <mat-error *ngIf="productForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+      <mat-error *ngIf="productForm.get('quantity')?.hasError('min')">Quantity must be positive</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" formControlName="price">
+      <mat-error *ngIf="productForm.get('price')?.hasError('required')">Price is required</mat-error>
+      <mat-error *ngIf="productForm.get('price')?.hasError('min')">Price must be positive</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Supplier Name</mat-label>
+      <input matInput formControlName="supplier_name">
+      <mat-error *ngIf="productForm.get('supplier_name')?.hasError('required')">Supplier is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="productForm.get('category')?.hasError('required')">Category is required</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="productForm.invalid">
+    {{isEdit ? 'Update' : 'Add'}}
+  </button>
+</mat-dialog-actions>

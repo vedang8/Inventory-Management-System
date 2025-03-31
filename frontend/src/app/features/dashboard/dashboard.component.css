@@ -1,0 +1,24 @@
+.dashboard-container {
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f3e5f5, #fce4ec);
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    color: #9c27b0;
+  }
+  
+  .controls {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    width: 200px;
+  }
