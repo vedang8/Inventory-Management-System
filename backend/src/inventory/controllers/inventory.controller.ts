@@ -20,18 +20,18 @@ export class InventoryController {
     }
 
     @Get(':id')
-    getInventoryById(@Param('id') id: number) {
-        //return this.inventoryService.getInventoryById(id);
+    getInventoryById(@Param('id') id: string) {
+        return this.inventoryService.getInventoryById(id);
     }
 
     @Put(':id')
-    updateInventory(@Param('id') id: number, @Body() updateInventoryDto: UpdateInventoryDto) {
-    // return this.inventoryService.updateInventory(id, updateInventoryDto);
+    updateInventory(@Param('id') id: string, @Body() updateInventoryDto: UpdateInventoryDto) {
+        return this.inventoryService.updateInventoryItem(id, updateInventoryDto);
     }
 
     @Delete(':id')
     deleteInventory(@Param('id') id: number) {
-        return this.inventoryService.deleteProduct;
+        return this.inventoryService.deleteProduct(id);
     }
 
     @Get('low-stock')
