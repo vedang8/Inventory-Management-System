@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ProductService } from '../../../../shared/services/product.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { Product } from '../../../../shared/models/product.model';
@@ -50,6 +50,12 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categoryFilter']) {
+      this.applyCategoryFilter();
+    }
+  }
+
   loadProducts(): void {
     this.productService.getProducts().subscribe({
       next: (response: any) => {
@@ -57,7 +63,7 @@ export class ProductListComponent implements OnInit {
         if(response.success){
             this.notification.showSuccess(response.message);
             this.products = response.products;
-            this.applyFilter();
+            this.applyCategoryFilter();
         }else{
             this.notification.showError(response.message);
         }
@@ -66,10 +72,12 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  applyFilter(): void {
-    this.filteredProducts = this.categoryFilter
-      ? this.products.filter(p => p.category === this.categoryFilter)
-      : [...this.products];
+  private applyCategoryFilter(): void {
+    if (this.categoryFilter) {
+      this.filteredProducts = this.products.filter(p => p.category === this.categoryFilter);
+    } else {
+      this.filteredProducts = this.products;
+    }
   }
 
   addProduct(): void {
@@ -111,8 +119,15 @@ export class ProductListComponent implements OnInit {
 
   getLowStock(): void {
     this.productService.getLowStockProducts().subscribe({
-      next: (products) => {
-        this.filteredProducts = products;
+      next: (response: any) => {
+        console.log('Product-List response', response);
+        if(response.success){
+            this.notification.showSuccess(response.message);
+            this.products = response.products;
+            this.applyCategoryFilter();
+        }else{
+            this.notification.showError(response.message);
+        }
       },
       error: (err: any) => this.notification.showError(err.message)
     });
