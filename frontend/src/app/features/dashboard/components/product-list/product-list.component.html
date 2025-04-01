@@ -1,56 +1,72 @@
-<div class="product-list">
-  <div class="actions">
-    <button mat-raised-button color="primary" class="add-btn" (click)="addProduct()">
-      <mat-icon>add</mat-icon> Add Product
+<!-- product-list.component.html -->
+<div class="product-list-container">
+  <div class="actions-bar">
+    <button mat-raised-button color="primary" class="action-btn" (click)="addProduct()">
+      <mat-icon>add_circle</mat-icon>
+      Add Product
     </button>
-    <button mat-raised-button color="accent" class="low-stock-btn" (click)="getLowStock()">
-      <mat-icon>visibility</mat-icon> Show Low Stock
+    <button mat-raised-button color="accent" class="action-btn" (click)="getLowStock()">
+      <mat-icon>warning</mat-icon>
+      Show Low Stock
     </button>
   </div>
 
   <mat-card class="product-card">
-    <mat-table [dataSource]="filteredProducts" class="custom-table">
-      
+    <mat-table [dataSource]="filteredProducts" class="modern-table">
+      <!-- Product Name -->
       <ng-container matColumnDef="product_name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.product_name}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Product Name</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.product_name}}</mat-cell>
       </ng-container>
 
+      <!-- Quantity -->
       <ng-container matColumnDef="quantity">
-        <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.quantity}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="price">
-        <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.price | currency}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="supplier_name">
-        <mat-header-cell *matHeaderCellDef> Supplier </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.supplier_name}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="category">
-        <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.category}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
         <mat-cell *matCellDef="let product">
-          <button mat-icon-button color="primary" class="edit-btn" (click)="editProduct(product)">
+          <span [ngClass]="{'low-stock': product.quantity < 10}">{{product.quantity}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Price -->
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.price | currency}}</mat-cell>
+      </ng-container>
+
+      <!-- Supplier Name -->
+      <ng-container matColumnDef="supplier_name">
+        <mat-header-cell *matHeaderCellDef>Supplier</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.supplier_name}}</mat-cell>
+      </ng-container>
+
+      <!-- Category -->
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.category}}</mat-cell>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <button mat-icon-button color="primary" class="action-icon" (click)="editProduct(product)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" class="delete-btn" (click)="deleteProduct(product.id!)">
+          <button mat-icon-button color="warn" class="action-icon" (click)="deleteProduct(product.id!)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
     </mat-table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Select page of products">
+    </mat-paginator>
   </mat-card>
 </div>

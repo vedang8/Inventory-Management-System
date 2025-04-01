@@ -4,10 +4,14 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef } fro
 import { ProductService } from '../../../../shared/services/product.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { Product } from '../../../../shared/models/product.model';
-import { MatError, MatFormField, MatLabel } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { MatError, MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select';
 import { DialogRef } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-product-form',
   standalone: true,
@@ -16,13 +20,11 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormField,
-    MatOption,
-    MatError,
-    MatLabel,
-    MatDialogActions,
-    MatSelect,
-    MatDialogContent
+    MatFormFieldModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule
   ]
 })
 export class ProductFormComponent implements OnInit {
@@ -38,10 +40,10 @@ export class ProductFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Product
   ) {
     this.productForm = this.fb.group({
-      name: ['', Validators.required],
+      product_name: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(0)]],
       price: ['', [Validators.required, Validators.min(0)]],
-      supplierName: ['', Validators.required],
+      supplier_name: ['', Validators.required],
       category: ['', Validators.required]
     });
   }
@@ -50,6 +52,7 @@ export class ProductFormComponent implements OnInit {
     if (this.data) {
       this.isEdit = true;
       this.productForm.patchValue(this.data);
+      console.log('Form value on init:', this.productForm.value);
     }
   }
 

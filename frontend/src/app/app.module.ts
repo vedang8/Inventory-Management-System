@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { DashboardModule } from './features/dashboard/dashboard.module'; // Add this import
+import { ProductFormComponent } from './features/dashboard/components/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DashboardModule } from './features/dashboard/dashboard.module'; // Add 
     SharedModule,
     MatSelectModule,
     MatOptionModule,
-    DashboardModule
+    DashboardModule,
+    ProductFormComponent
   ],
   providers: [
     {

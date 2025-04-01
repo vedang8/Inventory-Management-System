@@ -9,6 +9,8 @@ import { MatIcon } from '@angular/material/icon';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-list',
@@ -16,7 +18,9 @@ import { MatCard } from '@angular/material/card';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
   imports: [
+    CommonModule,
     MatTable,
+    MatPaginator,
     MatRow,
     MatHeaderCellDef,
     MatHeaderRow,
@@ -26,7 +30,8 @@ import { MatCard } from '@angular/material/card';
     CurrencyPipe,
     MatButtonModule,
     MatTableModule,
-    MatCard
+    MatCard,
+
   ]
 })
 export class ProductListComponent implements OnInit {
