@@ -1,20 +1,24 @@
 <div class="dashboard-container">
-    <header>
-      <h1>Inventory Management</h1>
-      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
-    </header>
-  
-    <div class="controls">
-      <mat-form-field appearance="fill">
-        <mat-label>Filter by Category</mat-label>
-        <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
-          <mat-option value="">All</mat-option>
-          <mat-option *ngFor="let category of categories" [value]="category">
-            {{category}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  
-    <app-product-list [categoryFilter]="selectedCategory"></app-product-list>
+  <header class="dashboard-header">
+    <h1>Inventory Management</h1>
+    <button mat-raised-button class="logout-btn" color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </header>
+
+  <div class="controls">
+    <mat-form-field appearance="outline" class="category-filter">
+      <mat-label>Filter by Category</mat-label>
+      <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+
+  <mat-divider></mat-divider>
+
+  <app-product-list [categoryFilter]="selectedCategory"></app-product-list>
+</div>

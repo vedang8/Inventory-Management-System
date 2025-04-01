@@ -4,11 +4,30 @@ import { NotificationService } from '../../../../core/services/notification.serv
 import { Product } from '../../../../shared/models/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { MatCell, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatRow, MatTable, MatTableModule } from '@angular/material/table';
+import { MatIcon } from '@angular/material/icon';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'app-product-list',
+  standalone: true,
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
+  imports: [
+    MatTable,
+    MatRow,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatIcon,
+    MatCell,
+    MatHeaderCell,
+    CurrencyPipe,
+    MatButtonModule,
+    MatTableModule,
+    MatCard
+  ]
 })
 export class ProductListComponent implements OnInit {
   @Input() categoryFilter: string = '';
@@ -28,10 +47,16 @@ export class ProductListComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-        this.applyFilter();
-      },
+      next: (response: any) => {
+        console.log('Product-List response', response);
+        if(response.success){
+            this.notification.showSuccess(response.message);
+            this.products = response.products;
+            this.applyFilter();
+        }else{
+            this.notification.showError(response.message);
+        }
+    },
       error: (err) => this.notification.showError(err.message)
     });
   }
