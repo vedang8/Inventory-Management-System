@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module'; // Ensure this is imported
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/shared.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,13 +19,15 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule, // This brings in RouterModule
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-right',
-      timeOut: 3000
-    }),
     SharedModule
   ],
   providers: [

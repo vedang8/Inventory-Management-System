@@ -1,28 +1,66 @@
 <div class="login-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
+  <mat-card class="login-card">
+    <div class="card-header">
+      <div class="logo-container">
+        <!-- Replace with your logo -->
+        <mat-icon class="logo">account_circle</mat-icon>
+      </div>
+      <mat-card-header class="header">
+        <mat-card-title class="welcome-title">Welcome Back</mat-card-title>
+        <mat-card-subtitle class="welcome-subtitle">Sign in to continue your journey</mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email">
-            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
-            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password">
-            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
-          </mat-form-field>
-  
-          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
-        </form>
-      </mat-card-content>
-      <mat-card-actions>
-        Don't have an account? <a routerLink="/register">Register</a>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+    </div>
+    
+    <mat-card-content class="content">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email">
+          <mat-icon matPrefix>mail</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Enter your password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <div class="forgot-password">
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button mat-raised-button class="login-btn" type="submit" [disabled]="loginForm.invalid">
+          Login
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+
+        <div class="divider">
+          <span class="divider-text">or continue with</span>
+        </div>
+
+        <div class="social-login">
+          <button mat-stroked-button class="social-btn">
+            <img src="assets/google-icon.svg" alt="Google" class="social-icon">
+            Google
+          </button>
+          <button mat-stroked-button class="social-btn">
+            <img src="assets/facebook-icon.svg" alt="Facebook" class="social-icon">
+            Facebook
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="footer">
+      <p class="register-text">Don't have an account? 
+        <a routerLink="/register" class="register-link">Register</a>
+      </p>
+    </mat-card-actions>
+  </mat-card>
+</div>

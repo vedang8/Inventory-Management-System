@@ -1,5 +1,5 @@
 /* Import Angular Material Magenta/Violet theme */
-@import '~@angular/material/prebuilt-themes/magenta-violet.css';
+@import '@angular/material/prebuilt-themes/magenta-violet.css';
 
 html, body {
   height: 100%;
@@ -10,13 +10,58 @@ html, body {
 
 .mat-card {
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(99, 40, 40, 0.1);
 }
 
-.success-toast {
-    background-color: #9c27b0 !important;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* Custom Toastr Error Styles */
 .error-toast {
-    background-color: #d81b60 !important;
+  background-color: #ff4444 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 16px 24px !important;
+  font-size: 14px !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.error-toast .toast-title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.error-toast .toast-message {
+  line-height: 1.5 !important;
+}
+
+.error-toast .toast-close-button {
+  color: white !important;
+  opacity: 0.8 !important;
+  font-size: 18px !important;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !
+}
+
+/* Custom Toastr Success Styles */
+.success-toast {
+  background-color: #00C851 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 16px 24px !important;
+  font-size: 14px !important;
+}
+
+.success-toast .toast-title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.success-toast .toast-progress {
+  background-color: rgba(255, 255, 255, 0.3) !important;
 }

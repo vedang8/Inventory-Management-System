@@ -14,11 +14,25 @@ export class NotificationService {
   }
 
   showSuccess(message: string): void {
-    this.toastr.success(message, 'Success', { toastClass: 'success-toast' });
+    this.toastr.success(message, 'Success', {
+      toastClass: 'success-toast',
+      timeOut: 3000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right'
+    });
   }
-
+  
   showError(message: string): void {
-    this.toastr.error(message, 'Error', { toastClass: 'error-toast' });
+    this.toastr.error(message, 'Error', { 
+      toastClass: 'error-toast',
+      timeOut: 3000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      enableHtml: false,
+      tapToDismiss: false
+    });
   }
 
   private initLowStockNotifications(): void {
